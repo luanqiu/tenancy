@@ -3,7 +3,18 @@ package ddd.tenancy.tenancy.infrastructure.housingresources.repository;
 import ddd.base.domain.VO;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
+import ddd.tenancy.tenancy.domain.core.vo.OperatorLogTypeEnum;
+import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
+import ddd.tenancy.tenancy.infrastructure.common.dal.OperatorLogDAO;
+import ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO;
+import ddd.tenancy.tenancy.infrastructure.housingresources.dal.HousingResourcesDAO;
+import ddd.tenancy.tenancy.infrastructure.housingresources.dal.dataobject.HousingResourcesDO;
+
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import javax.annotation.Resource;
 
 /**
 * HousingResourcesRepositoryImpl
@@ -11,6 +22,28 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public class HousingResourcesRepositoryImpl implements HousingResourcesRepository {
+
+  @Resource
+  private HousingResourcesDAO housingResourcesDAO;
+
+  @Resource
+  private OperatorLogDAO operatorLogDAO;
+
+  @Override
+  public HousingResourcesEntity getByHousingId(String housingId,
+                                               QueryHousingParamsVO queryHousingParamsVO) {
+    HousingResourcesDO housingResourcesDO = housingResourcesDAO.queryByHousingId(housingId);
+    HousingResourcesEntity housingResourcesEntity = housingResourcesDO.buildEntity();
+
+    if (queryHousingParamsVO.isQueryOperationLog()) {
+      List<OperatorLogDO>
+          operatorLogDOList =
+          operatorLogDAO.queryByBizIdAndType(housingId, OperatorLogTypeEnum.OPERATOR_LOG.getType());
+      housingResourcesEntity.setOperatorLogs(OperatorLogDO.buildVOS(operatorLogDOList));
+    }
+
+    return housingResourcesEntity;
+  }
 
   @Override
   public Boolean createHousingResources(VO vo) {

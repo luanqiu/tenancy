@@ -2,7 +2,6 @@ package  ddd.tenancy.tenancy.domain.core.service.impl;
 
 import ddd.base.domain.DomainService;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 
 /**
  * 校验合同入参
@@ -11,7 +10,8 @@ import javax.annotation.Resource;
 @Service
 public class CheckAgreementParamsDomainService implements DomainService {
 
-
   public void checkAgreementParams() {
+
   }
+
 }

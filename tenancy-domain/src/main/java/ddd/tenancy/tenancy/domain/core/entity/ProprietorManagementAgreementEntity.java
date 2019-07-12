@@ -76,22 +76,8 @@ public class ProprietorManagementAgreementEntity implements Entity<String> {
   private OperatorLogVO operatorLog;
 
   /**
-  * 创建合同
-  */
-  public void createProprietorManagementAgreement(VO vo) {
-
-  }
-
-  /**
-  * 合同过期
-  */
-  public void expireProprietorManagementAgreement(VO vo) {
-
-  }
-
-  /**
-  * 业主房屋管理合同创建
-  */
+   * 业主房屋管理合同创建
+   */
   public ProprietorManagementAgreementEntity createProprietorManagementAgreement(ProprietorManagementAgreementBuildVO proprietorManagementAgreementBuildVO) {
     try {
       proprietorManagementAgreementCreateSpecification.isSatisfied(proprietorManagementAgreementBuildVO);
@@ -107,6 +93,22 @@ public class ProprietorManagementAgreementEntity implements Entity<String> {
       throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
     }
   }
+
+  /**
+  * 创建合同
+  */
+  public void createProprietorManagementAgreement(VO vo) {
+
+  }
+
+  /**
+  * 合同过期
+  */
+  public void expireProprietorManagementAgreement(VO vo) {
+
+  }
+
+
 
   /**
   *

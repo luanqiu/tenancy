@@ -10,17 +10,22 @@ import ddd.tenancy.tenancy.common.exception.TenancySpiException;
 import ddd.tenancy.tenancy.common.specification.ISpecification;
 import ddd.tenancy.tenancy.domain.core.event.HousingResourcesChangeEvent;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
+import ddd.tenancy.tenancy.domain.core.repository.OperatorLogRepository;
 import ddd.tenancy.tenancy.domain.core.vo.HousingResourcesBuildVO;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+import ddd.tenancy.tenancy.domain.core.vo.OperatorLogTypeEnum;
 import ddd.tenancy.tenancy.domain.core.vo.ProprietorInfoVO;
 import ddd.tenancy.tenancy.domain.core.vo.PropertyInformationVO;
 import ddd.tenancy.tenancy.domain.core.vo.OperatorLogVO;
 
 import javax.annotation.Resource;
 
+import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,8 +40,16 @@ import lombok.extern.slf4j.Slf4j;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class HousingResourcesEntity implements Entity<String> {
 
+  @Override
+  public final String getUniqueId() {
+    return housingId;
+  }
+
   @Resource
   private HousingResourcesRepository housingResourcesRepository;
+
+  @Resource
+  private OperatorLogRepository operatorLogRepository;
 
   @Resource
   private ISpecification housingResourcesCreateSpecification;
@@ -50,15 +63,12 @@ public class HousingResourcesEntity implements Entity<String> {
   @Resource
   private DomainEventPublisherI domainEventPublisher;
 
-  @Override
-  public String getUniqueId() {
-    return housingId;
-  }
+
 
   /**
   * 房源唯一标识
   */
-  private String housingId;
+  private  String housingId;
 
   /**
   * 房源地址
@@ -83,7 +93,7 @@ public class HousingResourcesEntity implements Entity<String> {
   /**
   * 操作记录
   */
-  private OperatorLogVO operatorLog;
+  private List<OperatorLogVO> operatorLogs;
 
   /**
   * 增加房源
@@ -148,6 +158,46 @@ public class HousingResourcesEntity implements Entity<String> {
       throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
     }
   }
+
+  /**
+   * 根据实际需求查询房源实体
+   * @param housingId
+   * @param queryHousingParamsVO
+   * @return
+   */
+  public HousingResourcesEntity getByHousingId(String housingId, QueryHousingParamsVO queryHousingParamsVO) {
+    try {
+      return housingResourcesRepository.getByHousingId(housingId,queryHousingParamsVO).checkLegal();
+    } catch (TenancySpiException e) {
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+    } catch (TenancyDomainException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+    }
+  }
+
+  //糟糕的演示
+//  public HousingResourcesEntity getByHousingId(String housingId,
+//                                               QueryHousingParamsVO queryHousingParamsVO) {
+//    try {
+//      HousingResourcesEntity
+//          housingResourcesEntity = housingResourcesRepository.getByHousingId(housingId).checkLegal();
+//      if (queryHousingParamsVO.isQueryOperationLog()) {
+//        List<OperatorLogVO> operatorLogVOS =
+//            operatorLogRepository.queryByBizIdAndType(housingResourcesEntity.getHousingId(),
+//                                                      OperatorLogTypeEnum.OPERATOR_LOG.getType());
+//        housingResourcesEntity.setOperatorLogs(operatorLogVOS);
+//      }
+//      return housingResourcesEntity;
+//    } catch (TenancySpiException e) {
+//      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+//    } catch (TenancyDomainException e) {
+//      throw e;
+//    } catch (Exception e) {
+//      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+//    }
+//  }
 
   /**
    * 校验应该是自己校验的，这里委托给specification，保持代码的统一

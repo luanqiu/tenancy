@@ -1,4 +1,4 @@
-package ddd.tenancy.tenancy.spi.housePropertyAdmin;
+package ddd.tenancy.tenancy.spi.decouplingcontext.housepropertyadmin;
 
 import ddd.tenancy.tenancy.domain.core.service.HousePropertyAdminService;
 import org.springframework.stereotype.Service;

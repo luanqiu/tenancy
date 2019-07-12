@@ -1,4 +1,4 @@
-package ddd.tenancy.tenancy.spi.paybill;
+package ddd.tenancy.tenancy.spi.decouplingcontext.paybill;
 
 import ddd.tenancy.tenancy.domain.common.billdetail.service.PayBillService;
 import ddd.tenancy.tenancy.domain.common.billdetail.vo.PayResponseVO;

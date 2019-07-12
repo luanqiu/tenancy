@@ -25,5 +25,14 @@ public class OperatorLogVO implements VO {
    */
   private String operatorId;
 
+  /**
+   * 操作记录类型
+   */
+  private String type;
+
+  /**
+   * 操作记录业务id
+   */
+  private String bizId;
 
 }

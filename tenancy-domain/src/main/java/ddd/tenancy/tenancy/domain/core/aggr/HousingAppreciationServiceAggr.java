@@ -26,13 +26,13 @@ import ddd.tenancy.tenancy.domain.support.appreciationservice.entity.Appreciatio
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class HousingAppreciationServiceAggr implements Aggr<HousingResourcesEntity> {
 
-  @Resource
-  private DomainFactory<VO, HousingAppreciationServiceAggr> housingAppreciationServiceAggrFactory;
-
   @Override
   public HousingResourcesEntity getAggrRoot() {
     return housingResourcesEntity;
   }
+
+  @Resource
+  private DomainFactory<VO, HousingAppreciationServiceAggr> housingAppreciationServiceAggrFactory;
 
   @Resource
   private HousingResourcesEntity housingResourcesEntity;

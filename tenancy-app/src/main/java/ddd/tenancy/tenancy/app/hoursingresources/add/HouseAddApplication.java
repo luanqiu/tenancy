@@ -1,4 +1,4 @@
-package ddd.tenancy.tenancy.app.houseadd;
+package ddd.tenancy.tenancy.app.hoursingresources.add;
 
 import ddd.base.domain.Application;
 import ddd.tenancy.tenancy.api.common.dto.BaseRequestDTO;
