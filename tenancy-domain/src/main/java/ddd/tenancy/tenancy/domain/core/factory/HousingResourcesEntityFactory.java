@@ -19,6 +19,7 @@ public class HousingResourcesEntityFactory implements DomainFactory<HousingResou
     entity.setHousingId("");
     entity.setAddress(vo.getAddress());
     entity.setProprietorId(vo.getProprietorId());
+    entity.setPropertyInformation(vo.getProprietorId());
     return entity;
   }
 }

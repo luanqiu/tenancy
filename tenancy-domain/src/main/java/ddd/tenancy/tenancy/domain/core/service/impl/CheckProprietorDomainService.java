@@ -15,7 +15,13 @@ public class CheckProprietorDomainService implements DomainService {
   @Resource
   private PublicSecurityService publicSecurityService;
 
-  public void checkProprietor() {
+  /**
+   * 校验业主有效信息
+   * @param proprietorId
+   * @param proprietorName
+   */
+  public void checkProprietor(String proprietorId,String proprietorName) {
+    // TODO: 2019/7/18 未完成
     publicSecurityService.publicSecurity();
   }
 }

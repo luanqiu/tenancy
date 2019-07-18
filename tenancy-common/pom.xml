@@ -38,6 +38,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
         <!-- Spring框架 End -->
 
         <!-- 日志依赖 -->
@@ -69,6 +73,16 @@
             <groupId>com.github.luanqiu</groupId>
             <artifactId>ddd-base</artifactId>
             <version>${ddd.base.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
         </dependency>
 
     </dependencies>

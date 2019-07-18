@@ -1,4 +1,4 @@
-package ddd.tenancy.tenancy.common.exception;
+package ddd.tenancy.tenancy.api.common;
 
 import lombok.Getter;
 

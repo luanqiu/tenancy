@@ -3,6 +3,7 @@ package ddd.tenancy.tenancy.api.common.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import ddd.tenancy.tenancy.api.common.OutErrorEnum;
 import lombok.Data;
 
 /**
@@ -24,6 +25,18 @@ public class BaseRequestDTO implements Serializable{
    * 业务发生的时间(这笔请求发起的时间)
    */
   private Date bizDate;
+
+  /**
+   * 错误码
+   * @see OutErrorEnum
+   */
+  private String code;
+
+  /**
+   * 错误码描述
+   * @see OutErrorEnum
+   */
+  private String msg;
 
   @Override
   public String toString() {

@@ -1,5 +1,8 @@
 package ddd.tenancy.tenancy.domain.core.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+
 import ddd.base.domain.DomainEventPublisherI;
 import ddd.base.domain.DomainFactory;
 import ddd.base.domain.Entity;
@@ -10,15 +13,15 @@ import ddd.tenancy.tenancy.common.exception.TenancySpiException;
 import ddd.tenancy.tenancy.common.specification.ISpecification;
 import ddd.tenancy.tenancy.domain.core.event.HousingResourcesChangeEvent;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
-import ddd.tenancy.tenancy.domain.core.repository.OperatorLogRepository;
 import ddd.tenancy.tenancy.domain.core.vo.HousingResourcesBuildVO;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
-import ddd.tenancy.tenancy.domain.core.vo.OperatorLogTypeEnum;
 import ddd.tenancy.tenancy.domain.core.vo.ProprietorInfoVO;
 import ddd.tenancy.tenancy.domain.core.vo.PropertyInformationVO;
 import ddd.tenancy.tenancy.domain.core.vo.OperatorLogVO;
@@ -26,6 +29,7 @@ import ddd.tenancy.tenancy.domain.core.vo.OperatorLogVO;
 import javax.annotation.Resource;
 
 import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
+import ddd.tenancy.tenancy.domain.core.vo.moment.HoursingAddRequestMomentVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,9 +53,6 @@ public class HousingResourcesEntity implements Entity<String> {
   private HousingResourcesRepository housingResourcesRepository;
 
   @Resource
-  private OperatorLogRepository operatorLogRepository;
-
-  @Resource
   private ISpecification housingResourcesCreateSpecification;
 
   @Resource
@@ -62,8 +63,6 @@ public class HousingResourcesEntity implements Entity<String> {
 
   @Resource
   private DomainEventPublisherI domainEventPublisher;
-
-
 
   /**
   * 房源唯一标识
@@ -93,14 +92,7 @@ public class HousingResourcesEntity implements Entity<String> {
   /**
   * 操作记录
   */
-  private List<OperatorLogVO> operatorLogs;
-
-  /**
-  * 增加房源
-  */
-  public void createHousingResources(VO vo) {
-
-  }
+  private List<OperatorLogVO> operatorLogs = Lists.newArrayList();
 
   /**
   * 更新房源
@@ -131,7 +123,10 @@ public class HousingResourcesEntity implements Entity<String> {
       housingResourcesCreateSpecification.isSatisfied(housingResourcesBuildVO);
       HousingResourcesEntity housingResourcesEntity = housingResourcesEntityFactory.perfect(housingResourcesBuildVO);
       housingResourcesRepository.insert(housingResourcesEntity);
-      domainEventPublisher.publish(new HousingResourcesChangeEvent(housingResourcesEntity), false);
+      // 这个消息看场景，如果业务方不需要操作记录，直接在这里发送，如果业务方需要操作记录，也可以写在事务落库之后再发送
+      // HousingResourcesChangeListener 消费的地方，需要等待事务提交之后，才能开始发送消息，
+      // 可以使用 spring 的 TransactionSynchronizationManager 来监听事务的成功和失败
+      notifyEntity();
       return housingResourcesEntity;
     } catch (TenancySpiException e) {
       throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
@@ -141,6 +136,47 @@ public class HousingResourcesEntity implements Entity<String> {
       throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
     }
   }
+
+  /**
+   * 事件通知
+   *  这里应该把自己全部通知出去，HousingResourcesChangeListener 里面会去区分，到底应该发送多少
+   */
+  public void notifyEntity() {
+    domainEventPublisher.publish(new HousingResourcesChangeEvent(this), false);
+  }
+
+  /**
+   * 增加操作记录
+   * 操作记录主要记录 5W 1H
+   * WHO ： operatorId
+   * WHERE ： source
+   * WHAT ： housingId
+   * WHEN ： time
+   * WHY ： 录入房源
+   * HOW ： 当前 application 要干什么事情
+   */
+  public void addOperatorLog(HoursingAddRequestMomentVO hoursingAddRequestMoment) {
+    OperatorLogVO operatorLog = new OperatorLogVO();
+    operatorLog.setOperatorId(hoursingAddRequestMoment.getOperatorId());// WHO
+    operatorLog.setSource(hoursingAddRequestMoment.getSource());//WHERE
+    operatorLog.setBizId(getUniqueId());//WHAT
+    operatorLog.setBizTime(new Date());//WHEN
+    operatorLog.setType("房源添加");//WHY 可以写个枚举
+    operatorLog.setContent(JSON.toJSONString(
+        new HashMap<String,String>(){{
+        put("address",JSON.toJSONString(hoursingAddRequestMoment.getHoursingAddressMomentVO()));
+        put("proprietorName",hoursingAddRequestMoment.getProprietorName());
+        put("propertyName",hoursingAddRequestMoment.getPropertyName());
+        put("propertyFee",hoursingAddRequestMoment.getPropertyFee());
+    }}
+    )
+    );//HOW 可以选择需要的字段
+
+    housingResourcesRepository.addOperatorLog(operatorLog);
+    // 不要忘记 放进去了，重要
+    getOperatorLogs().add(operatorLog);
+  }
+
 
   /**
   *
@@ -221,4 +257,7 @@ public class HousingResourcesEntity implements Entity<String> {
   public HousingResourcesEntity get(HousingResourcesBuildVO housingResourcesBuildVO) {
     return housingResourcesEntityFactory.perfect(housingResourcesBuildVO);
   }
+
+
+
 }

@@ -2,6 +2,8 @@ package  ddd.tenancy.tenancy.domain.core.service.impl;
 
 import ddd.base.domain.DomainService;
 import ddd.tenancy.tenancy.domain.core.service.HousePropertyAdminService;
+import ddd.tenancy.tenancy.domain.core.vo.moment.HoursingAddRequestMomentVO;
+
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -15,7 +17,8 @@ public class CheckHouseLegalityDomainService implements DomainService {
   @Resource
   private HousePropertyAdminService housePropertyAdminService;
 
-  public void checkHouseLegality() {
+  // TODO: 2019/7/18  
+  public void checkHouseLegality(HoursingAddRequestMomentVO hoursingAddRequestMomentVO) {
     housePropertyAdminService.housePropertyAdmin();
   }
 }
