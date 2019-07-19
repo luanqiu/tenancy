@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 
 /**
  * HouseAddApplication
- * 2019.07.18 简单版本。缺少幂等、并发、等等内容
+ * 2019.07.18 简单版本。缺少幂等、并发、去冲等等内容
  * date Jun 4, 2019 12:44:25 PM
  */
 @Component
