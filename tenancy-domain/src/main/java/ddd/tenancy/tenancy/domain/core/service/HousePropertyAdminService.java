@@ -9,6 +9,7 @@ public interface HousePropertyAdminService {
   /**
    * 房产局
    */
-  void housePropertyAdmin();
+  Boolean checkHousingOwn(String proprietorId,String address);
 
+  Boolean checkHouseLegality();
 }

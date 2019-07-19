@@ -5,6 +5,7 @@ import ddd.tenancy.tenancy.api.hoursingresources.dto.HoursingAddRequestDTO;
 import ddd.tenancy.tenancy.api.hoursingresources.dto.HoursingAddResponseDTO;
 import ddd.tenancy.tenancy.common.utils.BeanCopierUtils;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
+import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingOwnDomainService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingParamsDomainService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckProprietorDomainService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckHouseLegalityDomainService;
@@ -37,6 +38,9 @@ public class HouseAddApplication
   @Resource
   private TransactionTemplate transactionTemplate;
 
+  @Resource
+  private CheckHousingOwnDomainService checkHousingOwnDomainService;
+
   @Override
   public HoursingAddResponseDTO doAction(HoursingAddRequestDTO request) {
     HoursingAddRequestMomentVO hoursingAddRequestMomentVO = new HoursingAddRequestMomentVO();
@@ -52,7 +56,15 @@ public class HouseAddApplication
     // step 2：校验房源合法性
     checkHouseLegalityDomainService.checkHouseLegality(hoursingAddRequestMomentVO);
 
-    // step 3：事务中操作
+    // step 3：通过领域服务组装一些数据
+    // 通过房地产接口查询业务是否是房屋的真实拥有者
+    Boolean ownHousingLegal =
+        checkHousingOwnDomainService.checkHousingOwn(hoursingAddRequestMomentVO.getProprietorId(),
+                                                     hoursingAddRequestMomentVO
+                                                         .getHoursingAddressMomentVO()
+                                                         .buildChinaAddress());
+
+    // step 4：事务中操作
     /**
      *  hoursingAddRequestMomentVO 转化成了 HousingResourcesBuildVO
      *  你也可以完全不转，hoursingAddRequestMomentVO 是整个流程中所有 step 都可使用的 vo
@@ -67,16 +79,16 @@ public class HouseAddApplication
           // step 3-1：实体入库
           HousingResourcesEntity entity = HousingResourcesEntity.get()
               .createHousingResources(HousingResourcesBuildVO.buildFromHoursingAddRequestMomentVO(
-                  hoursingAddRequestMomentVO));
+                  hoursingAddRequestMomentVO,ownHousingLegal));
           // step 3-2：操作记录入库
           entity.addOperatorLog(hoursingAddRequestMomentVO);
           return entity;
         });
 
-    // step 4：事件通知
+    // step 5：事件通知
     housingResourcesEntity.notifyEntity();
 
-    // step 5：返回
+    // step 6：返回
     HoursingAddResponseDTO responseDTO = HoursingAddResponseDTO.buildBaseSuccess(HoursingAddResponseDTO.class);
     responseDTO.setHousingId(housingResourcesEntity.getHousingId());
     return responseDTO;

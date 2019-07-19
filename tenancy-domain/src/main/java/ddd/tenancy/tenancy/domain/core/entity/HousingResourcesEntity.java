@@ -138,14 +138,6 @@ public class HousingResourcesEntity implements Entity<String> {
   }
 
   /**
-   * 事件通知
-   *  这里应该把自己全部通知出去，HousingResourcesChangeListener 里面会去区分，到底应该发送多少
-   */
-  public void notifyEntity() {
-    domainEventPublisher.publish(new HousingResourcesChangeEvent(this), false);
-  }
-
-  /**
    * 增加操作记录
    * 操作记录主要记录 5W 1H
    * WHO ： operatorId
@@ -164,17 +156,25 @@ public class HousingResourcesEntity implements Entity<String> {
     operatorLog.setType("房源添加");//WHY 可以写个枚举
     operatorLog.setContent(JSON.toJSONString(
         new HashMap<String,String>(){{
-        put("address",JSON.toJSONString(hoursingAddRequestMoment.getHoursingAddressMomentVO()));
-        put("proprietorName",hoursingAddRequestMoment.getProprietorName());
-        put("propertyName",hoursingAddRequestMoment.getPropertyName());
-        put("propertyFee",hoursingAddRequestMoment.getPropertyFee());
-    }}
-    )
+          put("address",JSON.toJSONString(hoursingAddRequestMoment.getHoursingAddressMomentVO()));
+          put("proprietorName",hoursingAddRequestMoment.getProprietorName());
+          put("propertyName",hoursingAddRequestMoment.getPropertyName());
+          put("propertyFee",hoursingAddRequestMoment.getPropertyFee());
+        }}
+                           )
     );//HOW 可以选择需要的字段
 
     housingResourcesRepository.addOperatorLog(operatorLog);
     // 不要忘记 放进去了，重要
     getOperatorLogs().add(operatorLog);
+  }
+
+  /**
+   * 事件通知
+   *  这里应该把自己全部通知出去，HousingResourcesChangeListener 里面会去区分，到底应该发送多少
+   */
+  public void notifyEntity() {
+    domainEventPublisher.publish(new HousingResourcesChangeEvent(this), false);
   }
 
 
@@ -187,11 +187,11 @@ public class HousingResourcesEntity implements Entity<String> {
     try {
       return housingResourcesRepository.getByHousingId(housingId).checkLegal();
     } catch (TenancySpiException e) {
-      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e);
     } catch (TenancyDomainException e) {
       throw e;
     } catch (Exception e) {
-      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e);
     }
   }
 
@@ -205,11 +205,11 @@ public class HousingResourcesEntity implements Entity<String> {
     try {
       return housingResourcesRepository.getByHousingId(housingId,queryHousingParamsVO).checkLegal();
     } catch (TenancySpiException e) {
-      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e);
     } catch (TenancyDomainException e) {
       throw e;
     } catch (Exception e) {
-      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e);
     }
   }
 

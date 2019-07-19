@@ -19,6 +19,6 @@ public class CheckHouseLegalityDomainService implements DomainService {
 
   // TODO: 2019/7/18  
   public void checkHouseLegality(HoursingAddRequestMomentVO hoursingAddRequestMomentVO) {
-    housePropertyAdminService.housePropertyAdmin();
+    housePropertyAdminService.checkHouseLegality();
   }
 }

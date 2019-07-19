@@ -40,14 +40,20 @@ public class HousingResourcesBuildVO implements VO {
   private String propertyFee;
 
   /**
+   * 是否是房源的合法主人
+   */
+  private Boolean ownHousingLegal;
+
+  /**
    * 从中间结果 VO 拿值，场景比较复杂的情况下，这种方法可能很多
    * 这不是一种行为，只是简单的参数转化
    */
-  public static final HousingResourcesBuildVO buildFromHoursingAddRequestMomentVO(HoursingAddRequestMomentVO vo) {
+  public static final HousingResourcesBuildVO buildFromHoursingAddRequestMomentVO(HoursingAddRequestMomentVO vo,Boolean ownHousingLegal) {
     HousingResourcesBuildVO buildVO = new HousingResourcesBuildVO();
     buildVO.setAddress(vo.getHoursingAddressMomentVO().buildChinaAddress());
     buildVO.setProprietorId(vo.getProprietorId());
     buildVO.setPropertyName(vo.getPropertyName());
+    buildVO.setOwnHousingLegal(ownHousingLegal);
     return buildVO;
   }
 

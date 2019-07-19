@@ -10,6 +10,10 @@ public class TenancyDomainException extends TenancyException {
     super(code, msg);
   }
 
+  public TenancyDomainException(int code,Exception errors) {
+    super(code+"",errors);
+  }
+
   public TenancyDomainException(Errors errors) {
     super(errors.getCode(), errors.getMessage());
   }
