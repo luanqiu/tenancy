@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 public class HousePropertyAdminServiceImpl implements HousePropertyAdminService {
 
   @Override
-  public void housePropertyAdmin() {
-
+  public Boolean checkHousingOwn(String proprietorId, String address) {
+    return null;
   }
 
+  @Override
+  public Boolean checkHouseLegality() {
+    return null;
+  }
 }

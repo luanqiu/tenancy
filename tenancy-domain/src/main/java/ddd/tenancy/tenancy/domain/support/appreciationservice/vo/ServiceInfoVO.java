@@ -2,8 +2,8 @@ package ddd.tenancy.tenancy.domain.support.appreciationservice.vo;
 
 import ddd.base.domain.VO;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.Builder;
 
 /**
  * 服务信息

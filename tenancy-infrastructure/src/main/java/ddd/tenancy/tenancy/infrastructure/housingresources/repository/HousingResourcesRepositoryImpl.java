@@ -4,6 +4,7 @@ import ddd.base.domain.VO;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
 import ddd.tenancy.tenancy.domain.core.vo.OperatorLogTypeEnum;
+import ddd.tenancy.tenancy.domain.core.vo.OperatorLogVO;
 import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
 import ddd.tenancy.tenancy.infrastructure.common.dal.OperatorLogDAO;
 import ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO;
@@ -60,4 +61,8 @@ public class HousingResourcesRepositoryImpl implements HousingResourcesRepositor
     return null;
   }
 
+  @Override
+  public void addOperatorLog(OperatorLogVO operatorLog) {
+
+  }
 }

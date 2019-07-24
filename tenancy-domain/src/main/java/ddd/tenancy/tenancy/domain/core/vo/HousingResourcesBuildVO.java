@@ -50,7 +50,8 @@ public class HousingResourcesBuildVO implements VO {
    */
   public static final HousingResourcesBuildVO buildFromHoursingAddRequestMomentVO(HoursingAddRequestMomentVO vo,Boolean ownHousingLegal) {
     HousingResourcesBuildVO buildVO = new HousingResourcesBuildVO();
-    buildVO.setAddress(vo.getHoursingAddressMomentVO().buildChinaAddress());
+    buildVO.setAddress(
+        vo.getHoursingAddressMomentVO().buildChinaAddress());
     buildVO.setProprietorId(vo.getProprietorId());
     buildVO.setPropertyName(vo.getPropertyName());
     buildVO.setOwnHousingLegal(ownHousingLegal);

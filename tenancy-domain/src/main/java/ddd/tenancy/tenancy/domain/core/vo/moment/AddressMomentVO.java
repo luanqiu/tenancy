@@ -44,7 +44,8 @@ public class AddressMomentVO implements Serializable {
    */
   public String buildAddress() {
     return new StringBuffer().append(country)
-        .append(province).append(city).append(country).append(detailedAddress).toString();
+        .append(province).append(city).append(country)
+        .append(detailedAddress).toString();
   }
 
 }

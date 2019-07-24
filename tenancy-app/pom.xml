@@ -25,5 +25,10 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>ddd.tenancy</groupId>
+            <artifactId>tenancy-api</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>

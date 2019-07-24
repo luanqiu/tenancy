@@ -2,8 +2,8 @@ package ddd.tenancy.tenancy.domain.core.vo;
 
 import ddd.base.domain.VO;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.Builder;
 
 /**
  * 物业信息
