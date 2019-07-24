@@ -32,7 +32,11 @@
             <artifactId>spring-web</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>ddd.tenancy</groupId>
+            <artifactId>tenancy-api</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
 </project>
