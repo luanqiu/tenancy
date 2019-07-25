@@ -4,6 +4,7 @@ import ddd.base.domain.DomainFactory;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingOwnDomainService;
 import ddd.tenancy.tenancy.domain.core.vo.HousingResourcesBuildVO;
+import ddd.tenancy.tenancy.domain.core.vo.PropertyInformationVO;
 import ddd.tenancy.tenancy.domain.core.vo.ProprietorInfoVO;
 
 import org.springframework.stereotype.Component;
@@ -41,6 +42,13 @@ public class HousingResourcesEntityFactory implements DomainFactory<HousingResou
 
     // 像这样
     proprietorInfo.setOwnHousingLegal(vo.getOwnHousingLegal());
+    entity.setProprietorInfo(proprietorInfo);
+
+    PropertyInformationVO propertyInformationVO = PropertyInformationVO.builder()
+        .propertyFee(vo.getPropertyFee())
+        .propertyName(vo.getPropertyName())
+        .build();
+    entity.setPropertyInformation(propertyInformationVO);
 
     return entity;
   }

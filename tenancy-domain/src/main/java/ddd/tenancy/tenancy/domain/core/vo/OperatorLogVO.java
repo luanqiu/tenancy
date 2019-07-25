@@ -44,4 +44,10 @@ public class OperatorLogVO implements VO {
    * 记录的内容
    */
   private String content;
+
+  public static void main(String[] args) {
+    PropertyInformationVO vo = PropertyInformationVO.builder().propertyFee("nihao").build();
+    System.out.println(vo);
+  }
+
 }

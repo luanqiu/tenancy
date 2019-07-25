@@ -9,15 +9,10 @@ import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
 
 /**
  * HousingResourcesRepository
- * author  likongpeng
+ * author  wenhe
  * date 2019/4/6
  */
 public interface HousingResourcesRepository extends Repository {
-
-  /**
-   * 房源创建
-   */
-  Boolean createHousingResources(VO vo);
 
   /**
    *

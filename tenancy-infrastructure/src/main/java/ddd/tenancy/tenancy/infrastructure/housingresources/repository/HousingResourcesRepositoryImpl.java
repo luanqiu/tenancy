@@ -1,6 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.housingresources.repository;
 
-import ddd.base.domain.VO;
+import ddd.tenancy.tenancy.common.exception.Errors;
+import ddd.tenancy.tenancy.common.exception.TenancySpiException;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
 import ddd.tenancy.tenancy.domain.core.vo.OperatorLogTypeEnum;
@@ -47,13 +48,20 @@ public class HousingResourcesRepositoryImpl implements HousingResourcesRepositor
   }
 
   @Override
-  public Boolean createHousingResources(VO vo) {
-    return null;
+  public void insert(HousingResourcesEntity housingResourcesEntity) {
+    HousingResourcesDO insertDO = HousingResourcesDO.buildDO(housingResourcesEntity);
+    int success = housingResourcesDAO.insert(insertDO);
+    if(success <= 0 ){
+      throw new TenancySpiException(Errors.END);
+    }
   }
 
   @Override
-  public void insert(HousingResourcesEntity housingResourcesEntity) {
-
+  public void addOperatorLog(OperatorLogVO operatorLog) {
+    int success = operatorLogDAO.insert(OperatorLogDO.buildDO(operatorLog));
+    if(success <= 0 ){
+      throw new TenancySpiException(Errors.END);
+    }
   }
 
   @Override
@@ -61,8 +69,5 @@ public class HousingResourcesRepositoryImpl implements HousingResourcesRepositor
     return null;
   }
 
-  @Override
-  public void addOperatorLog(OperatorLogVO operatorLog) {
 
-  }
 }

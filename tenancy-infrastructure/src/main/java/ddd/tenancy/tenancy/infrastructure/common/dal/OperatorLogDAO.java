@@ -12,4 +12,6 @@ import ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO;
 public interface OperatorLogDAO {
 
   List<OperatorLogDO> queryByBizIdAndType(String housingId, String type);
+
+  int insert(OperatorLogDO operatorLogDO);
 }

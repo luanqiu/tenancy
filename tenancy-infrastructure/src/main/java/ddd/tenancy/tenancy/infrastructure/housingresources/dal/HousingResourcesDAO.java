@@ -10,4 +10,6 @@ import ddd.tenancy.tenancy.infrastructure.housingresources.dal.dataobject.Housin
 public interface HousingResourcesDAO {
 
   HousingResourcesDO queryByHousingId(String housingId);
+
+  int insert(HousingResourcesDO insertDO);
 }

@@ -25,5 +25,10 @@ public class PropertyInformationVO implements VO {
    */
   private String propertyFee;
 
+  /**
+   * 这个是演示的默认值，忽略
+   */
+  @Builder.Default
+  private String demoDefaultValue ="defaultDemo";
 
 }

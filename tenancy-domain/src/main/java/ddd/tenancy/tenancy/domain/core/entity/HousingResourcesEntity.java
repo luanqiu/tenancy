@@ -137,6 +137,29 @@ public class HousingResourcesEntity implements Entity<String> {
     }
   }
 
+  // 实体和值对象一起新增
+  public HousingResourcesEntity createHousingResourcesAll(HousingResourcesBuildVO housingResourcesBuildVO) {
+    try {
+      housingResourcesCreateSpecification.isSatisfied(housingResourcesBuildVO);
+      // 得到实体的基本值
+      HousingResourcesEntity housingResourcesEntity = housingResourcesEntityFactory.perfect(housingResourcesBuildVO);
+      // 得到实体的所有值对象的值
+      OperatorLogVO operatorLog = new OperatorLogVO();
+      getOperatorLogs().add(operatorLog);
+      // 将整个实体进行新增
+      housingResourcesRepository.insert(housingResourcesEntity);
+      notifyEntity();
+      return housingResourcesEntity;
+    } catch (TenancySpiException e) {
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+    } catch (TenancyDomainException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+    }
+  }
+
+
   /**
    * 增加操作记录
    * 操作记录主要记录 5W 1H
@@ -163,7 +186,6 @@ public class HousingResourcesEntity implements Entity<String> {
         }}
                            )
     );//HOW 可以选择需要的字段
-
     housingResourcesRepository.addOperatorLog(operatorLog);
     // 不要忘记 放进去了，重要
     getOperatorLogs().add(operatorLog);

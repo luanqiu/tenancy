@@ -16,4 +16,8 @@ public class OperatorLogDO {
   public static List<OperatorLogVO> buildVOS(List<OperatorLogDO> operatorLogDOList) {
     return Lists.newArrayList();
   }
+
+  public static final OperatorLogDO buildDO(OperatorLogVO vo){
+    return new OperatorLogDO();
+  }
 }

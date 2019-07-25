@@ -12,4 +12,8 @@ public class HousingResourcesDO {
   public HousingResourcesEntity buildEntity() {
     return new HousingResourcesEntity();
   }
+
+  public static final HousingResourcesDO buildDO(HousingResourcesEntity entity) {
+    return new HousingResourcesDO();
+  }
 }
