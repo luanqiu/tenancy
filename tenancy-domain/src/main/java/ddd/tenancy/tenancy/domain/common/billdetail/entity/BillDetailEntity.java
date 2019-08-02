@@ -151,6 +151,11 @@ public class BillDetailEntity implements Entity<String> {
     return null;
   }
 
+  /**
+   * 批量新增
+   * @param billDetailEntities
+   */
+  public void batchCreate(List<BillDetailEntity> billDetailEntities) {
 
-
+  }
 }

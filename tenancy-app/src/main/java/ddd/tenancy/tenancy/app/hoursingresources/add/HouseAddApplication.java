@@ -4,7 +4,12 @@ import ddd.base.domain.Application;
 import ddd.tenancy.tenancy.api.hoursingresources.dto.HoursingAddRequestDTO;
 import ddd.tenancy.tenancy.api.hoursingresources.dto.HoursingAddResponseDTO;
 import ddd.tenancy.tenancy.common.utils.BeanCopierUtils;
+import ddd.tenancy.tenancy.domain.common.account.entity.AccountEntity;
+import ddd.tenancy.tenancy.domain.common.account.service.CheckAccountLegalService;
+import ddd.tenancy.tenancy.domain.common.account.vo.AccountCheckReponseVO;
+import ddd.tenancy.tenancy.domain.common.account.vo.AccountCheckRequestVO;
 import ddd.tenancy.tenancy.domain.core.entity.HousingResourcesEntity;
+import ddd.tenancy.tenancy.domain.core.service.PublicSecurityService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingOwnDomainService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingParamsDomainService;
 import ddd.tenancy.tenancy.domain.core.service.impl.CheckProprietorDomainService;
@@ -41,6 +46,12 @@ public class HouseAddApplication
   @Resource
   private CheckHousingOwnDomainService checkHousingOwnDomainService;
 
+  @Resource
+  private CheckAccountLegalService checkAccountLegalService;
+
+  @Resource
+  private PublicSecurityService publicSecurityService;
+
   @Override
   public HoursingAddResponseDTO doAction(HoursingAddRequestDTO request) {
     HoursingAddRequestMomentVO hoursingAddRequestMomentVO = new HoursingAddRequestMomentVO();
@@ -50,8 +61,18 @@ public class HouseAddApplication
     checkHousingParamsDomainService.checkHousingParams(hoursingAddRequestMomentVO);
 
     // step 1：校验业主有效信息
-    checkProprietorDomainService.checkProprietor(hoursingAddRequestMomentVO.getProprietorId(),
-                                                 hoursingAddRequestMomentVO.getProprietorName());
+   checkProprietorDomainService.
+       checkAccountLegal(AccountCheckRequestVO.builder()
+     .accountId(hoursingAddRequestMomentVO.getProprietorId())
+                              .build());
+
+//    checkProprietorDomainService.
+//        checkProprietor(hoursingAddRequestMomentVO.getProprietorId());
+
+//    checkAccountLegalService.
+//        checkAccountLegal(AccountCheckRequestVO.builder()
+//     .accountId(hoursingAddRequestMomentVO.getProprietorId())
+//                              .build());
 
     // step 2：校验房源合法性
     checkHouseLegalityDomainService.checkHouseLegality(hoursingAddRequestMomentVO);

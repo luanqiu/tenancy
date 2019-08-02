@@ -1,4 +1,4 @@
-package ddd.tenancy.tenancy.domain.support.appreciationservicebill.aggr;
+package ddd.tenancy.tenancy.domain.support.appreciationservice.aggr;
 
 import ddd.base.domain.Aggr;
 import ddd.base.domain.DomainFactory;
@@ -34,10 +34,8 @@ public class AppreciationServiceBillAggr implements Aggr<AppreciationServiceEnti
     return appreciationServiceEntity;
   }
 
-  @Resource
   private AppreciationServiceEntity appreciationServiceEntity;
 
-  @Resource
   private BillEntity billEntity;
 
   /**

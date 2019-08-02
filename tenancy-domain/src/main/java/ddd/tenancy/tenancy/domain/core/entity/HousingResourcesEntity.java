@@ -116,6 +116,17 @@ public class HousingResourcesEntity implements Entity<String> {
   }
 
   /**
+   * 房源创建
+   */
+//  public HousingResourcesEntity createHousingResources2(HousingResourcesBuildVO housingResourcesBuildVO) {
+//    housingResourcesCreateSpecification.
+//        isSatisfied(housingResourcesBuildVO);
+//    return housingResourcesEntityFactory.
+//        perfect(housingResourcesBuildVO);
+//  }
+
+
+  /**
   * 房源创建
   */
   public HousingResourcesEntity createHousingResources(HousingResourcesBuildVO housingResourcesBuildVO) {

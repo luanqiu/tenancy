@@ -13,6 +13,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import ddd.tenancy.tenancy.domain.common.bill.factory.BillDetailAggrFactory;
+import ddd.tenancy.tenancy.domain.common.bill.vo.BillBuildVO;
 import ddd.tenancy.tenancy.domain.common.bill.vo.BillTypeEnum;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -46,20 +47,27 @@ public class BillDetailAggr implements Aggr<BillEntity> {
   /**
    * 构造账单明细
    */
-  public void buildBillDetail() {
-
+  public void buildBillDetail(BillEntity billEntity) {
+    // 此处聚合的实体我们都用 entity 表示，因为在流程中，
+    // BillEntity 已经被查询出来了，这里直接使用即可
+    // 所以入参是 entity，如果聚合的实体用唯一标识的话，
+    // 这里就再查询一把 BillEntity
+    setBillEntity(billEntity);
+    // 构造账单明细
+    List<BillDetailEntity> billDetailEntities = billDetailAggrFactory
+        .buildBillDetail(billEntity);
+    // 持久化
+    BillDetailEntity.get().batchCreate(billDetailEntities);
   }
 
   /**
    * @param bizId    账单是为了记录业务的帐，bizId为此业务的唯一标识<br/>
-   *                 如：帐是记录着租客租房的帐，bizId就为租房合同的唯一标识 (agreementId)
    * @param billType 账单类型，不同业务不同的账单类型<br/>
-   *                 如果记录的是租房合同的帐，就是租房合同帐类型,这个类型的枚举放在bill的vo的package下面就好了
-   *                 @see BillTypeEnum
    */
   public BillDetailAggr queryBillDetailAggrByBizId(String bizId, String billType) {
-    BillEntity billEntity = BillEntity.get().getByBizId(bizId, billType);
-    List<BillDetailEntity> billDetailEntities = BillDetailEntity.get().getByBillId(billEntity.getUniqueId());
+    BillEntity billEntity = BillEntity.get().getByBizIdAndType(bizId, billType);
+    List<BillDetailEntity> billDetailEntities = BillDetailEntity.get()
+        .getByBillId(billEntity.getUniqueId());
     return billDetailAggrFactory.perfect(billEntity,billDetailEntities);
   }
 

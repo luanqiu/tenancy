@@ -58,6 +58,12 @@ public class BillEntity implements Entity<String> {
   private String billId;
 
   /**
+   * 账单类型
+   *
+   */
+  private String type;
+
+  /**
   * 创建账单
   */
   public void createBill(VO vo) {
@@ -137,7 +143,7 @@ public class BillEntity implements Entity<String> {
     return billEntityFactory.perfect(billBuildVO);
   }
 
-  public BillEntity getByBizId(String bizId, String billType) {
+  public BillEntity getByBizIdAndType(String bizId, String billType) {
     return null;
   }
 }

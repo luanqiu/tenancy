@@ -34,10 +34,8 @@ public class HousingAppreciationServiceAggr implements Aggr<HousingResourcesEnti
   @Resource
   private DomainFactory<VO, HousingAppreciationServiceAggr> housingAppreciationServiceAggrFactory;
 
-  @Resource
   private HousingResourcesEntity housingResourcesEntity;
 
-  @Resource
   private AppreciationServiceEntity appreciationServiceEntity;
 
   /**
@@ -62,6 +60,50 @@ public class HousingAppreciationServiceAggr implements Aggr<HousingResourcesEnti
    */
   public static final HousingAppreciationServiceAggr get() {
     return DomainFactory.get(HousingAppreciationServiceAggr.class);
+  }
+
+  /**
+   * 房源创建
+   */
+  // 聚合的不同写法
+//  public HousingResourcesEntity createHousingResources(
+//      HousingResourcesBuildVO housingResourcesBuildVO,
+//      HousingResourcesRepository housingResourcesRepository) {
+//    try {
+//      HousingResourcesEntity housingResourcesEntity =
+//          HousingResourcesEntity.get().
+//              createHousingResources2(housingResourcesBuildVO);
+//
+//      housingResourcesRepository.insert(housingResourcesEntity);
+//      return housingResourcesEntity;
+//    } catch (TenancySpiException e) {
+//      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+//    } catch (TenancyDomainException e) {
+//      throw e;
+//    } catch (Exception e) {
+//      throw new TenancyDomainException(Errors.DEFAULT_PARAM_VALID_ERROR.getCode(), e.getMessage());
+//    }
+//  }
+
+  /**
+   * 更新房源
+   */
+  public void updateHousingResources(VO vo) {
+      HousingResourcesEntity.get().updateHousingResources(vo);
+  }
+
+  /**
+   * 可租校验
+   */
+  public void checkRent(VO vo) {
+    HousingResourcesEntity.get().checkRent(vo);
+  }
+
+  /**
+   * 校验房源合法性
+   */
+  public void checkHousingLegality(VO vo) {
+    HousingResourcesEntity.get().checkHousingLegality(vo);
   }
 
 }

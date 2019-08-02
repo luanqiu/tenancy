@@ -1,8 +1,8 @@
-package ddd.tenancy.tenancy.domain.support.appreciationservicebill.factory;
+package ddd.tenancy.tenancy.domain.support.appreciationservice.factory;
 
 import ddd.base.domain.DomainFactory;
 import ddd.base.domain.VO;
-import ddd.tenancy.tenancy.domain.support.appreciationservicebill.aggr.AppreciationServiceBillAggr;
+import ddd.tenancy.tenancy.domain.support.appreciationservice.aggr.AppreciationServiceBillAggr;
 import org.springframework.stereotype.Component;
 
 import ddd.tenancy.tenancy.domain.support.appreciationservice.entity.AppreciationServiceEntity;

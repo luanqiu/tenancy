@@ -34,10 +34,8 @@ public class TenantAgreementAppreciationServiceAggr implements Aggr<TenantAgreem
     return tenantAgreementEntity;
   }
 
-  @Resource
   private TenantAgreementEntity tenantAgreementEntity;
 
-  @Resource
   private AppreciationServiceEntity appreciationServiceEntity;
 
   /**

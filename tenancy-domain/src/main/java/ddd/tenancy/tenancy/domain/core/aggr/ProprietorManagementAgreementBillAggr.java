@@ -34,10 +34,8 @@ public class ProprietorManagementAgreementBillAggr implements Aggr<ProprietorMan
     return proprietorManagementAgreementEntity;
   }
 
-  @Resource
   private ProprietorManagementAgreementEntity proprietorManagementAgreementEntity;
 
-  @Resource
   private BillEntity billEntity;
 
   /**
