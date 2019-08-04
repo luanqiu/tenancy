@@ -13,8 +13,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import ddd.tenancy.tenancy.domain.common.bill.factory.BillDetailAggrFactory;
-import ddd.tenancy.tenancy.domain.common.bill.vo.BillBuildVO;
-import ddd.tenancy.tenancy.domain.common.bill.vo.BillTypeEnum;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +28,7 @@ import ddd.tenancy.tenancy.domain.common.billdetail.entity.BillDetailEntity;
 @Data
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class BillDetailAggr implements Aggr<BillEntity> {
+public class BillAggr implements Aggr<BillEntity> {
 
   @Resource
   private BillDetailAggrFactory billDetailAggrFactory;
@@ -64,7 +62,7 @@ public class BillDetailAggr implements Aggr<BillEntity> {
    * @param bizId    账单是为了记录业务的帐，bizId为此业务的唯一标识<br/>
    * @param billType 账单类型，不同业务不同的账单类型<br/>
    */
-  public BillDetailAggr queryBillDetailAggrByBizId(String bizId, String billType) {
+  public BillAggr queryBillDetailAggrByBizId(String bizId, String billType) {
     BillEntity billEntity = BillEntity.get().getByBizIdAndType(bizId, billType);
     List<BillDetailEntity> billDetailEntities = BillDetailEntity.get()
         .getByBillId(billEntity.getUniqueId());
@@ -77,7 +75,7 @@ public class BillDetailAggr implements Aggr<BillEntity> {
    * @param vo
    * @return
    */
-  public BillDetailAggr get(VO vo) {
+  public BillAggr get(VO vo) {
     return billDetailAggrFactory.perfect(vo);
   }
 
@@ -85,8 +83,8 @@ public class BillDetailAggr implements Aggr<BillEntity> {
    * 最简单的得到自己新的实例
    * 复杂的请使用Factory
    */
-  public static final BillDetailAggr get() {
-    return DomainFactory.get(BillDetailAggr.class);
+  public static final BillAggr get() {
+    return DomainFactory.get(BillAggr.class);
   }
 
 }

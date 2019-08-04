@@ -6,7 +6,7 @@ import ddd.base.domain.DomainFactory;
 import ddd.base.domain.VO;
 import ddd.tenancy.tenancy.common.exception.Errors;
 import ddd.tenancy.tenancy.common.exception.TenancyDomainException;
-import ddd.tenancy.tenancy.domain.common.bill.aggr.BillDetailAggr;
+import ddd.tenancy.tenancy.domain.common.bill.aggr.BillAggr;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,11 +19,11 @@ import ddd.tenancy.tenancy.domain.common.billdetail.entity.BillDetailEntity;
  * date 2019/4/6
  */
 @Component
-public class BillDetailAggrFactory implements DomainFactory<VO, BillDetailAggr> {
+public class BillDetailAggrFactory implements DomainFactory<VO, BillAggr> {
 
   @Override
-  public BillDetailAggr perfect(VO vo) {
-    BillDetailAggr billDetailAggr = BillDetailAggr.get();
+  public BillAggr perfect(VO vo) {
+    BillAggr billDetailAggr = BillAggr.get();
     BillEntity billEntity = BillEntity.get();
     billDetailAggr.setBillEntity(billEntity);
     List<BillDetailEntity> billDetailEntitys = BillDetailEntity.get().getByBillId(null);
@@ -31,8 +31,8 @@ public class BillDetailAggrFactory implements DomainFactory<VO, BillDetailAggr> 
     return billDetailAggr;
   }
 
-  public BillDetailAggr perfect(BillEntity billEntities,List<BillDetailEntity> billDetailEntity){
-    BillDetailAggr billDetailAggr = new BillDetailAggr();
+  public BillAggr perfect(BillEntity billEntities, List<BillDetailEntity> billDetailEntity){
+    BillAggr billDetailAggr = new BillAggr();
     billDetailAggr.setBillDetailEntity(billDetailEntity);
     billDetailAggr.setBillEntity(billEntities);
     return billDetailAggr;
