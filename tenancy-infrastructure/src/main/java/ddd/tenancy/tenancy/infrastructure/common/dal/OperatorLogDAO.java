@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.common.dal;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 import ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO;
@@ -11,7 +13,8 @@ import ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO;
 */
 public interface OperatorLogDAO {
 
-  List<OperatorLogDO> queryByBizIdAndType(String housingId, String type);
+  List<OperatorLogDO> queryByBizIdAndType(
+      @Param("operatorId") String operatorId, @Param("action") String type);
 
-  int insert(OperatorLogDO operatorLogDO);
+  int insert(@Param("operatorLogDO") OperatorLogDO operatorLogDO);
 }

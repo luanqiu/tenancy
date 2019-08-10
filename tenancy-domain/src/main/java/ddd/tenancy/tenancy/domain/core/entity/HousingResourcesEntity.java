@@ -1,6 +1,5 @@
 package ddd.tenancy.tenancy.domain.core.entity;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 
 import ddd.base.domain.DomainEventPublisherI;
@@ -13,14 +12,15 @@ import ddd.tenancy.tenancy.common.exception.TenancySpiException;
 import ddd.tenancy.tenancy.common.specification.ISpecification;
 import ddd.tenancy.tenancy.domain.core.event.HousingResourcesChangeEvent;
 import ddd.tenancy.tenancy.domain.core.repository.HousingResourcesRepository;
+import ddd.tenancy.tenancy.domain.core.vo.ContentVO;
 import ddd.tenancy.tenancy.domain.core.vo.HousingResourcesBuildVO;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ddd.tenancy.tenancy.domain.core.vo.ProprietorInfoVO;
 import ddd.tenancy.tenancy.domain.core.vo.PropertyInformationVO;
@@ -29,6 +29,7 @@ import ddd.tenancy.tenancy.domain.core.vo.OperatorLogVO;
 import javax.annotation.Resource;
 
 import ddd.tenancy.tenancy.domain.core.vo.QueryHousingParamsVO;
+import ddd.tenancy.tenancy.domain.core.vo.SourceVO;
 import ddd.tenancy.tenancy.domain.core.vo.moment.HoursingAddRequestMomentVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +89,11 @@ public class HousingResourcesEntity implements Entity<String> {
   * 物业信息
   */
   private PropertyInformationVO propertyInformation;
+
+  /**
+   *
+   */
+  private Map<String,Boolean> tags;
 
   /**
   * 操作记录
@@ -183,20 +189,15 @@ public class HousingResourcesEntity implements Entity<String> {
    */
   public void addOperatorLog(HoursingAddRequestMomentVO hoursingAddRequestMoment) {
     OperatorLogVO operatorLog = new OperatorLogVO();
-    operatorLog.setOperatorId(hoursingAddRequestMoment.getOperatorId());// WHO
-    operatorLog.setSource(hoursingAddRequestMoment.getSource());//WHERE
+    SourceVO source = new SourceVO();
+    source.setOperatorId(Long.valueOf(hoursingAddRequestMoment.getOperatorId()));
+    operatorLog.setSource(source);// WHO
     operatorLog.setBizId(getUniqueId());//WHAT
     operatorLog.setBizTime(new Date());//WHEN
     operatorLog.setType("房源添加");//WHY 可以写个枚举
-    operatorLog.setContent(JSON.toJSONString(
-        new HashMap<String,String>(){{
-          put("address",JSON.toJSONString(hoursingAddRequestMoment.getHoursingAddressMomentVO()));
-          put("proprietorName",hoursingAddRequestMoment.getProprietorName());
-          put("propertyName",hoursingAddRequestMoment.getPropertyName());
-          put("propertyFee",hoursingAddRequestMoment.getPropertyFee());
-        }}
-                           )
-    );//HOW 可以选择需要的字段
+    ContentVO.HousingContentVO housingContentVO = new ContentVO().new HousingContentVO();
+    operatorLog.setContent(housingContentVO);
+    //HOW 可以选择需要的字段
     housingResourcesRepository.addOperatorLog(operatorLog);
     // 不要忘记 放进去了，重要
     getOperatorLogs().add(operatorLog);

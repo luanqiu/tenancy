@@ -18,12 +18,7 @@ public class OperatorLogVO implements VO {
   /**
    * 操作人id
    */
-  private String operatorId;
-
-  /**
-   * 操作者
-   */
-  private String source;
+  private SourceVO source;
 
   /**
    * 操作记录类型
@@ -43,11 +38,7 @@ public class OperatorLogVO implements VO {
   /**
    * 记录的内容
    */
-  private String content;
+  private ContentVO content;
 
-  public static void main(String[] args) {
-    PropertyInformationVO vo = PropertyInformationVO.builder().propertyFee("nihao").build();
-    System.out.println(vo);
-  }
 
 }

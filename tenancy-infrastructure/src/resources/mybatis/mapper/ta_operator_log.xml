@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+;CREATE TABLE `ta_operator_log` (
+  `id` BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'id',
+  `biz_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '业务id',
+  `operator_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '操作人id',
+  `action` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '操作类型',
+  `created_at` DATETIME NOT NULL DEFAULT '1990-09-09 00:00:00' COMMENT '创建时间',
+  `updated_at` DATETIME NOT NULL DEFAULT '1990-09-09 00:00:00' COMMENT '更新时间',
+  `content` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '操作内容'
+  PRIMARY KEY (`id`),
+  KEY `idx_biz_id` (`biz_id`)
+) ENGINE=InnoDB CHARSET=utf8mb4 COMMENT='操作记录表'
+-->
+<mapper namespace="ddd.tenancy.tenancy.infrastructure.common.dal.OperatorLogDAO">
+    <resultMap id="resultMap" type="ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO">
+        <id column="id" property="id"/>
+        <result column="biz_id" property="bizId"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="action" property="action"/>
+        <result column="created_at" property="created"/>
+        <result column="updated_at" property="updated"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <sql id="table_name">
+        ta_operator_log
+    </sql>
+
+    <sql id="all_fields">
+        id, biz_id, operator_id,action,created_at,updated_at,content
+    </sql>
+
+    <select id="queryByHousingId" resultMap="resultMap">
+        select
+        <include refid="all_fields"/>
+        from <include refid="table_name"/>
+        WHERE operator_id = #{operatorId}
+        and  action = #{action}
+        limit 1;
+    </select>
+
+    <insert id="insert" parameterType="ddd.tenancy.tenancy.infrastructure.common.dal.dataobject.OperatorLogDO">
+        insert into <include refid="table_name"/>
+        (<include refid="all_fields"/>)
+        values(
+        #{id},
+        #{bizId},
+        #{operatorId},
+        #{action},
+        #{created},
+        #{updated},
+        #{content}
+        )
+    </insert>
+
+
+</mapper>

@@ -34,7 +34,8 @@ public class HousingResourcesRepositoryImpl implements HousingResourcesRepositor
   @Override
   public HousingResourcesEntity getByHousingId(String housingId,
                                                QueryHousingParamsVO queryHousingParamsVO) {
-    HousingResourcesDO housingResourcesDO = housingResourcesDAO.queryByHousingId(housingId);
+    HousingResourcesDO housingResourcesDO =
+        housingResourcesDAO.queryByHousingId(housingId);
     HousingResourcesEntity housingResourcesEntity = housingResourcesDO.buildEntity();
 
     if (queryHousingParamsVO.isQueryOperationLog()) {

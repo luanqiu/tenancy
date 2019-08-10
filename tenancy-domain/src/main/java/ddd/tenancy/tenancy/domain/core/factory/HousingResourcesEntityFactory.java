@@ -6,6 +6,7 @@ import ddd.tenancy.tenancy.domain.core.service.impl.CheckHousingOwnDomainService
 import ddd.tenancy.tenancy.domain.core.vo.HousingResourcesBuildVO;
 import ddd.tenancy.tenancy.domain.core.vo.PropertyInformationVO;
 import ddd.tenancy.tenancy.domain.core.vo.ProprietorInfoVO;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
@@ -16,8 +17,10 @@ import javax.annotation.Resource;
  * perfect 简单的构造示范
  * date 2019/4/6
  */
+@Slf4j
 @Component
-public class HousingResourcesEntityFactory implements DomainFactory<HousingResourcesBuildVO, HousingResourcesEntity> {
+public class HousingResourcesEntityFactory
+    implements DomainFactory<HousingResourcesBuildVO, HousingResourcesEntity> {
 
   @Resource
   private CheckHousingOwnDomainService checkHousingOwnDomainService;
@@ -51,5 +54,35 @@ public class HousingResourcesEntityFactory implements DomainFactory<HousingResou
     entity.setPropertyInformation(propertyInformationVO);
 
     return entity;
+  }
+
+  public static void main(String[] args) {
+
+    if (true) {
+      // 两层 if
+      if (true) {
+
+      }
+    } else if (true) {
+      if (true) {
+        // 三层 if
+        if (true) {
+
+        } else {
+
+        }
+      } else {
+
+      }
+      // 第三个 if 分支
+    } else if (true) {
+
+    } else if (true) {
+
+    } else {
+
+    }
+
+
   }
 }

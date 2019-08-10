@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.housingresources.dal;
 
+import org.apache.ibatis.annotations.Param;
+
 import ddd.tenancy.tenancy.infrastructure.housingresources.dal.dataobject.HousingResourcesDO;
 
 /**
@@ -9,7 +11,8 @@ import ddd.tenancy.tenancy.infrastructure.housingresources.dal.dataobject.Housin
 */
 public interface HousingResourcesDAO {
 
-  HousingResourcesDO queryByHousingId(String housingId);
+  HousingResourcesDO queryByHousingId(
+      @Param("housingId") String housingId);
 
-  int insert(HousingResourcesDO insertDO);
+  int insert(@Param("insertDO") HousingResourcesDO insertDO);
 }

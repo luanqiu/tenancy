@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+;CREATE TABLE `ta_housing_resources` (
+  `id` BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'id',
+  `housing_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '房源id',
+  `address` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '房源地址',
+  `proprietor_info` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '业主信息',
+  `created_at` DATETIME NOT NULL DEFAULT '1990-09-09 00:00:00' COMMENT '创建时间',
+  `updated_at` DATETIME NOT NULL DEFAULT '1990-09-09 00:00:00' COMMENT '更新时间',
+  `property_info` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '物业信息',
+  `status` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '状态',
+  `tags` BIGINT NOT NULL DEFAULT '0' COMMENT '标',
+  PRIMARY KEY (`id`),
+  KEY `idx_housing_id` (`housing_id`)
+) ENGINE=InnoDB CHARSET=utf8mb4 COMMENT='房源表'
+-->
+<mapper namespace="ddd.tenancy.tenancy.infrastructure.housingresources.dal.HousingResourcesDAO">
+    <resultMap id="resultMap" type="ddd.tenancy.tenancy.infrastructure
+    .housingresources.dal.dataobject.HousingResourcesDO">
+        <id column="id" property="id"/>
+        <id column="housing_id" property="housingId"/>
+        <id column="proprietor_info" property="proprietorInfo"/>
+        <id column="created_at" property="created"/>
+        <id column="updated_at" property="updated"/>
+        <id column="property_info" property="propertyInfo"/>
+        <id column="status" property="status"/>
+        <id column="tags" property="tags"/>
+    </resultMap>
+
+    <sql id="table_name">
+        ta_housing_resources
+    </sql>
+
+    <sql id="all_fields">
+        id, housing_id, proprietor_info,created_at,updated_at,property_info,status,tags
+    </sql>
+
+    <select id="queryByHousingId" resultMap="resultMap">
+        select
+        <include refid="all_fields"/>
+        from <include refid="table_name"/>
+        WHERE housing_id = #{housingId}
+        limit 1;
+    </select>
+
+
+</mapper>
