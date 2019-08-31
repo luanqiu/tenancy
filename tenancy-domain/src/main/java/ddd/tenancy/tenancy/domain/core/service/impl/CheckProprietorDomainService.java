@@ -25,7 +25,8 @@ import javax.annotation.Resource;
 @Service
 public class CheckProprietorDomainService implements DomainService {
 
-  @Resource
+// 用于演示方案 1，我们公寓租房是方案 2
+//  @Resource
   private AccountService accountService;
 
   @Resource

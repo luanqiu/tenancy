@@ -17,8 +17,7 @@
 ) ENGINE=InnoDB CHARSET=utf8mb4 COMMENT='房源表'
 -->
 <mapper namespace="ddd.tenancy.tenancy.infrastructure.housingresources.dal.HousingResourcesDAO">
-    <resultMap id="resultMap" type="ddd.tenancy.tenancy.infrastructure
-    .housingresources.dal.dataobject.HousingResourcesDO">
+    <resultMap id="resultMap" type="ddd.tenancy.tenancy.infrastructure.housingresources.dal.dataobject.HousingResourcesDO">
         <id column="id" property="id"/>
         <id column="housing_id" property="housingId"/>
         <id column="proprietor_info" property="proprietorInfo"/>
