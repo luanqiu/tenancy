@@ -59,15 +59,13 @@ public class LianJiaHousingAddRestController  {
 
   private HoursingAddRequestDTO buildHoursingAddRequestByString(String request) {
     Map<String,Object> requestMap = JSON.parseObject(request,Map.class);
-    Map<String,String> hoursingAddressMap = Maps.newHashMap();
 
     HoursingAddRequestDTO requestDTO = new HoursingAddRequestDTO();
     HoursingAddress hoursingAddress = new HoursingAddress();
-    hoursingAddress.setCounty(hoursingAddressMap.get("country"));
-    hoursingAddress.setProvince(hoursingAddressMap.get("province"));
-    hoursingAddress.setCity(hoursingAddressMap.get("city"));
-    hoursingAddress.setCounty(hoursingAddressMap.get("county"));
-    hoursingAddress.setDetailedAddress(hoursingAddressMap.get("detailedAddress"));
+    hoursingAddress.setCounty(null == requestMap.get("country") ? "" : requestMap.get("country").toString());
+    hoursingAddress.setProvince(null == requestMap.get("province") ? "" : requestMap.get("province").toString());
+    hoursingAddress.setCity(null == requestMap.get("city") ? "" : requestMap.get("city").toString());
+    hoursingAddress.setDetailedAddress(null == requestMap.get("detailedAddress") ? "" : requestMap.get("detailedAddress").toString());
 
     requestDTO.setHoursingAddress(hoursingAddress);
     requestDTO.setProprietorId(
