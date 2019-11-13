@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.tenantagreement.message;
 
+import com.google.common.eventbus.Subscribe;
+
 import ddd.base.domain.EventListenerI;
 import ddd.tenancy.tenancy.domain.core.event.TenantAgreementChangeEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TenantAgreementChangeListener implements EventListenerI<TenantAgreementChangeEvent> {
 
+  @Subscribe
   @Override
   public void execute(TenantAgreementChangeEvent event) {
 

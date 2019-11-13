@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.proprietormanagementagreement.message;
 
+import com.google.common.eventbus.Subscribe;
+
 import ddd.base.domain.EventListenerI;
 import ddd.tenancy.tenancy.domain.core.event.ProprietorManagementAgreementChangeEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProprietorManagementAgreementChangeListener implements EventListenerI<ProprietorManagementAgreementChangeEvent> {
 
+  @Subscribe
   @Override
   public void execute(ProprietorManagementAgreementChangeEvent event) {
 

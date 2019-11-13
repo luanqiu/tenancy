@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.appreciationservice.message;
 
+import com.google.common.eventbus.Subscribe;
+
 import ddd.base.domain.EventListenerI;
 import ddd.tenancy.tenancy.domain.support.appreciationservice.event.AppreciationServiceChangeEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppreciationServiceChangeListener implements EventListenerI<AppreciationServiceChangeEvent> {
 
+  @Subscribe
   @Override
   public void execute(AppreciationServiceChangeEvent event) {
 

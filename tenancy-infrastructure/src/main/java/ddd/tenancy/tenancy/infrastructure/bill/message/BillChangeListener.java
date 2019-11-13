@@ -1,5 +1,7 @@
 package ddd.tenancy.tenancy.infrastructure.bill.message;
 
+import com.google.common.eventbus.Subscribe;
+
 import ddd.base.domain.EventListenerI;
 import ddd.tenancy.tenancy.domain.common.bill.event.BillChangeEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BillChangeListener implements EventListenerI<BillChangeEvent> {
 
+  @Subscribe
   @Override
   public void execute(BillChangeEvent event) {
     // send
