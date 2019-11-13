@@ -55,7 +55,7 @@ public class HouseAddApplication
   @Override
   public HoursingAddResponseDTO doAction(HoursingAddRequestDTO request) {
     HoursingAddRequestMomentVO hoursingAddRequestMomentVO = new HoursingAddRequestMomentVO();
-    BeanCopierUtils.copyProperties(hoursingAddRequestMomentVO, request);
+    BeanCopierUtils.copyProperties(request,hoursingAddRequestMomentVO);
 
     // step 0：入参校验
     checkHousingParamsDomainService.checkHousingParams(hoursingAddRequestMomentVO);

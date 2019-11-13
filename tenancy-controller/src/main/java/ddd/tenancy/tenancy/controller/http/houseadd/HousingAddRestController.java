@@ -2,6 +2,7 @@ package ddd.tenancy.tenancy.controller.http.houseadd;
 
 import com.google.common.base.Preconditions;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ import ddd.tenancy.tenancy.common.exception.ExceptionCatcher;
  * date Jun 4, 2019 12:44:25 PM
  */
 @RestController
-@RequestMapping("/tenancy/housingAdd")
+@RequestMapping("/tenancy/housingAdd2")
 public class HousingAddRestController {
 
   @Resource
@@ -29,6 +30,7 @@ public class HousingAddRestController {
    * @param request
    * @return
    */
+  @PostMapping("add")
   public HoursingAddResponseDTO addHousing(HoursingAddRequestDTO request) {
 
     return ExceptionCatcher.process(HoursingAddResponseDTO.class,this, request, () -> {

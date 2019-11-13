@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,7 @@ public class LianJiaHousingAddRestController  {
    * 比如自如和链家签订了合作 链家会把房源信息自动传给自如，但必须按照链家目前已有的协议 协议的字段大概如下：
    * {"address":{"country":"中国","province":"浙江省","city":"杭州市","detailedAddress":"武林壹号2幢1801室","county":"西湖区"},"propertyName":"绿城","proprietorId":"34253787878784****ee23","propertyFee":"7","proprietorName":"狗蛋"}
    */
+  @PostMapping("add")
   public String addHousing(String request) {
     try {
       Preconditions
