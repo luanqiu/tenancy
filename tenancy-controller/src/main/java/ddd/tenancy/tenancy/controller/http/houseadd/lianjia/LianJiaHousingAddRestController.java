@@ -2,7 +2,6 @@ package ddd.tenancy.tenancy.controller.http.houseadd.lianjia;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

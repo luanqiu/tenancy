@@ -20,6 +20,9 @@ import ddd.tenancy.tenancy.domain.core.vo.moment.HoursingAddRequestMomentVO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 /**
@@ -54,6 +57,8 @@ public class HouseAddApplication
 
   @Override
   public HoursingAddResponseDTO doAction(HoursingAddRequestDTO request) {
+
+
     HoursingAddRequestMomentVO hoursingAddRequestMomentVO = new HoursingAddRequestMomentVO();
     BeanCopierUtils.copyProperties(request,hoursingAddRequestMomentVO);
 

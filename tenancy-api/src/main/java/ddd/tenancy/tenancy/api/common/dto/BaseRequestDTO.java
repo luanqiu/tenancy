@@ -38,6 +38,11 @@ public class BaseRequestDTO implements Serializable{
    */
   private String msg;
 
+  /**
+   * 前端请求到后端，后端匹配的 flowId
+   */
+  private String flowId;
+
   @Override
   public String toString() {
     return "BaseRequestDTO{" +

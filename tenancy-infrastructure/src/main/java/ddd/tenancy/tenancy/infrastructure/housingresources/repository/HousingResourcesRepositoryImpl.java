@@ -25,6 +25,15 @@ import javax.annotation.Resource;
 @Repository
 public class HousingResourcesRepositoryImpl implements HousingResourcesRepository {
 
+  @Override
+  public void insert(HousingResourcesEntity housingResourcesEntity) {
+    HousingResourcesDO insertDO = HousingResourcesDO.buildDO(housingResourcesEntity);
+    int success = housingResourcesDAO.insert(insertDO);
+    if(success <= 0 ){
+      throw new TenancySpiException(Errors.END);
+    }
+  }
+
   @Resource
   private HousingResourcesDAO housingResourcesDAO;
 
@@ -48,14 +57,7 @@ public class HousingResourcesRepositoryImpl implements HousingResourcesRepositor
     return housingResourcesEntity;
   }
 
-  @Override
-  public void insert(HousingResourcesEntity housingResourcesEntity) {
-    HousingResourcesDO insertDO = HousingResourcesDO.buildDO(housingResourcesEntity);
-    int success = housingResourcesDAO.insert(insertDO);
-    if(success <= 0 ){
-      throw new TenancySpiException(Errors.END);
-    }
-  }
+
 
   @Override
   public void addOperatorLog(OperatorLogVO operatorLog) {
